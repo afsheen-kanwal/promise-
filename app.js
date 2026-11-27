@@ -86,7 +86,7 @@
 // let p1= aysnfunction1()
 // p1.then((res)=>{
 //   console.log(res)
-  
+
 // console.log("fetching data 2  ....")
 // let p2= aysnfunction1()
 // p2.then((res)=>{
@@ -148,7 +148,7 @@
 //     console.log("data :", dataid)
 //     resolve("success");
 //     reject("errror sorry for delay")
-   
+
 //   }, 2000)
 //  })
 
@@ -168,7 +168,7 @@
 // 
 
 //  getdata(1).then(()=>{
-  
+
 //    return getdata(2);
 // }).then(()=>{
 //     console.log("second")
@@ -227,6 +227,7 @@
 //   console.log(i,str)
 // }
 
+
 // Ek function banao orderPizza() jo Promise return kare. Ab 3 steps ek ke baad ek chalne chahiye, promise chaining se:
 
 // Order place karo (2 sec baad): "Order placed" print karo
@@ -251,6 +252,65 @@
 // Pizza is ready
 // Pizza delivered
 
+
+// function orderpizza() {
+//     return new Promise((resolve, reject) => {
+//         setTimeout(() => {
+//             console.log("order placed ")
+//             resolve()
+//             reject("oven kharab hai");
+//         }, 2000);
+//     })
+// }
+// function pizzaready() {
+//     return new Promise((resolve, reject) => {
+//         setTimeout(() => {
+//             console.log("pizza ready hai ")
+//             resolve()
+//             reject("oven kharab hai");
+//         }, 3000);
+//     })
+// }
+
+// function pizzadeliverd() {
+//     return new Promise((resolve, reject) => {
+//         setTimeout(() => {
+//             console.log("pizza deliverd")
+//             resolve()
+//             reject("oven kharab hai");
+//         }, 2000);
+//     })
+// }
+
+// orderpizza().then(() => {
+//     return pizzaready()
+// }).then(() => {
+//     return pizzadeliverd();
+// }).catch((err) => {
+//     console.log(err)
+// })
+
+
+// async function helo() {
+//  console.log("hello")   
+// }
+// function api() {
+//     return new Promise((reslove, reject) => {
+//         setTimeout(() => {
+//             console.log("weather data")
+//             reslove("success")
+
+//         }, 2000)
+//     })
+// }
+
+// async function getweatherdata() {
+//     await api();
+//     await api();
+//     await api();
+
+// }
+// =================================comparing all =============================
 
 function orderpizza() {
     return new Promise((resolve, reject) => {
@@ -280,11 +340,34 @@ function pizzadeliverd() {
         }, 2000);
     })
 }
+// aysn awiat =============================
+(async function() {
+    try {
+        await orderpizza()
+        await pizzaready()
+        await pizzadeliverd()
+    } catch (err) {
+        console.log(err)
+    }
+})();
 
+// promise====================================
 orderpizza().then(() => {
     return pizzaready()
 }).then(() => {
     return pizzadeliverd();
 }).catch((err) => {
     console.log(err)
+})
+
+// call back hell===============================
+
+orderpizza(() => {
+    console.log("order placed")
+    pizzaready(() => {
+        console.log("pizza ready")
+        pizzadeliverd(() => {
+            console.log("pizza delivred")
+        })
+    })
 })
